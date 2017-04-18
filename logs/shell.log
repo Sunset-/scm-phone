@@ -1,0 +1,31 @@
+Last login: Mon Mar 13 14:47:36 2017 from 61.48.40.26
+
+Welcome to Alibaba Cloud Elastic Compute Service !
+
+cd /home/jameka/jameka-vm
+unzip -o build-20170313-2304.zip
+rm -rf build-20170313-2304.zip
+\cp -f verification.html ../jameka-phone/verification.html
+exit
+[root@iZ94hd03swxZ ~]# cd /home/jameka/jameka-vm
+[root@iZ94hd03swxZ jameka-vm]# unzip -o build-20170313-2304.zip
+Archive:  build-20170313-2304.zip
+  inflating: build.js                
+  inflating: build.js.map            
+  inflating: verification.html       
+  inflating: images/fontawesome-webfont.eot  
+  inflating: images/fontawesome-webfont.svg  
+  inflating: images/fontawesome-webfont.ttf  
+  inflating: images/fontawesome-webfont.woff  
+  inflating: images/fontawesome-webfont.woff2  
+  inflating: images/nopic.png        
+  inflating: images/person_card.png  
+  inflating: images/person_mark.png  
+  inflating: images/person_oem.png   
+  inflating: js/jquery.min.js        
+  inflating: js/sunset-wechat.js     
+  inflating: js/wx.js                
+[root@iZ94hd03swxZ jameka-vm]# rm -rf build-20170313-2304.zip
+[root@iZ94hd03swxZ jameka-vm]# \cp -f verification.html ../jameka-phone/verifica tion.html
+[root@iZ94hd03swxZ jameka-vm]# exit
+logout
