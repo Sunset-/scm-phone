@@ -1,17 +1,18 @@
-Last login: Mon Mar 13 14:47:36 2017 from 61.48.40.26
+Last login: Wed Apr 19 23:07:22 2017 from 123.139.22.152
 
-Welcome to Alibaba Cloud Elastic Compute Service !
+Welcome to aliyun Elastic Compute Service!
 
-cd /home/jameka/jameka-vm
-unzip -o build-20170313-2304.zip
-rm -rf build-20170313-2304.zip
-\cp -f verification.html ../jameka-phone/verification.html
-exit
-[root@iZ94hd03swxZ ~]# cd /home/jameka/jameka-vm
-[root@iZ94hd03swxZ jameka-vm]# unzip -o build-20170313-2304.zip
-Archive:  build-20170313-2304.zip
+Hi, please view: http://pastie.org/private/3hymqya3krcfn2xic3qikg for further information in regards to your files!
+Hi, please view: http://pastie.org/private/3hymqya3krcfn2xic3qikg for further information in regards to your files!
+Hi, please view: http://pastie.org/private/3hymqya3krcfn2xic3qikg for further information in regards to your files!
+Hi, please view: http://pastie.org/private/3hymqya3krcfn2xic3qikg for further information in regards to your files!
+[root@iZ94yxnvvbwZ ~]# cd /home/scm/phone
+[root@iZ94yxnvvbwZ phone]# unzip -o build-20170419-2308.zip
+Archive:  build-20170419-2308.zip
   inflating: build.js                
   inflating: build.js.map            
+  inflating: index.html              
+  inflating: style.8cd184b53870163c8549.css  
   inflating: verification.html       
   inflating: images/fontawesome-webfont.eot  
   inflating: images/fontawesome-webfont.svg  
@@ -22,10 +23,17 @@ Archive:  build-20170313-2304.zip
   inflating: images/person_card.png  
   inflating: images/person_mark.png  
   inflating: images/person_oem.png   
+  inflating: dll/dll.23ac2e23fef7aea345b6.css  
+  inflating: dll/dll.23ac2e23fef7aea345b6.js  
+  inflating: scripts/index.8cd184b53870163c8549.js  
   inflating: js/jquery.min.js        
   inflating: js/sunset-wechat.js     
   inflating: js/wx.js                
-[root@iZ94hd03swxZ jameka-vm]# rm -rf build-20170313-2304.zip
-[root@iZ94hd03swxZ jameka-vm]# \cp -f verification.html ../jameka-phone/verifica tion.html
-[root@iZ94hd03swxZ jameka-vm]# exit
+  inflating: dll/images/fontawesome-webfont.eot  
+  inflating: dll/images/fontawesome-webfont.svg  
+  inflating: dll/images/fontawesome-webfont.ttf  
+  inflating: dll/images/fontawesome-webfont.woff  
+  inflating: dll/images/fontawesome-webfont.woff2  
+[root@iZ94yxnvvbwZ phone]# rm -rf build-20170419-2308.zip
+[root@iZ94yxnvvbwZ phone]# exit
 logout

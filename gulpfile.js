@@ -11,18 +11,11 @@ var gulp = require('gulp'),
 
 var publishFileName;
 
+
 gulp.task('build', function () {
 	return gulp.src('src/main.js')
-		.pipe(webpack(require('./webpack.config.js')))
+		.pipe(webpack(require('./config/webpack/webpack.build.config')))
 		.pipe(gulp.dest('build/'));
-});
-
-gulp.task('version', ['build'], function () {
-	var now = new Date().getTime();
-	gulp.src(['build/verification.html'])
-		.pipe(replace(/build\.js\?v=\d+/g, 'build.js?v=' + now))
-		.pipe(replace(/sunset-wechat\.js\?v=\d+/g, 'sunset-wechat.js?v=' + now))
-		.pipe(gulp.dest('build'));
 });
 gulp.task('zip', function () {
 	return gulp.src('build/**/*.*')
@@ -52,12 +45,12 @@ gulp.task('unzip', ['upload'], function () {
 			password: config.sftp.pass
 		}
 	});
-	SSH.shell(['cd ' + config.sftp.remotePath, 'unzip -o ' + publishFileName, 'rm -rf ' + publishFileName,'\\cp -f verification.html ../jameka-phone/verification.html'], {
+	SSH.shell(['cd ' + config.sftp.remotePath, 'unzip -o ' + publishFileName, 'rm -rf ' + publishFileName], {
 			filePath: 'shell.log'
 		})
 		.pipe(gulp.dest('logs'));
 });
 
 gulp.task('publish', function (cb) {
-	gulpSequence('version', 'zip', 'unzip', cb);
+	gulpSequence('build', 'zip', 'unzip', cb);
 })

@@ -1,9 +1,9 @@
 <template>
     <div>
-        <sunset-table v-ref:table :options="tableOptions"></sunset-table>
+        <sunset-table style="margin-bottom:10px;" v-ref:table :options="tableOptions"></sunset-table>
+        <mt-button v-if="statement&&statement.CHKTAG == '0'" :type="'primary'" size="large" icon="" @click="ensure">确认</mt-button>
     </div>
 </template>
-
 <script>
     import StatementStore from './StatementStore.js';
 
@@ -17,15 +17,12 @@
             return {
                 tableOptions: {
                     columns: [{
-                        title: '名称',
-                        name: 'GDNAME',
-                        format(v) {
-                            return v;
-                        }
+                        title: '描述',
+                        name: 'desc'
                     }, {
-                        title: '数量',
-                        name: 'ORDERQTY',
-                        align: 'center'
+                        title: '销售',
+                        name: 'TLPRC',
+                        format: 'MONEY'
                     }, {
                         title: '成本',
                         name: 'TLCOST',
@@ -55,11 +52,38 @@
         methods: {
             loadDetail() {
                 if (this.statement) {
+                    this.$refs.table.setData({});
                     this.$refs.table.search({
                         entno: this.statement.ENTNO,
-                        statementno: this.statement.ORDERNO
+                        orderno: this.statement.SHEETNO,
+                        pageno: 1,
+                        count: 9999,
+                        type: this.statement.WLTYPE,
+                        desc: `${this.statement.WORKDATE}${{
+                                'BY': '收货',
+                                'RT': '退货',
+                                'SL': '销售',
+                                'AJ': '销售调整',
+                                'FE': '供应商费用'
+                            }[this.statement.WLTYPE]}`
                     });
                 }
+            },
+            ensure() {
+                Sunset.confirm({
+                    title: '',
+                    message: '确认对账单？'
+                }).then(res => {
+                    StatementStore.confirm({
+                        entno: this.statement.ENTNO,
+                        sheetno: this.statement.SHEETNO
+                    }).then(res => {
+                        Sunset.tip('确认成功', 'success');
+                        this.statement.CHKTAG = '1';
+                        this.$emit('refresh');
+                        Router.go('/statement');
+                    });
+                });
             }
         },
         watch: {

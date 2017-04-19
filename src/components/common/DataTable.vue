@@ -97,6 +97,9 @@
         .sunset-crud-table-footer {
             margin-top: 15px;
         }
+        .table-td-link{
+            color : #3091f2;
+        }
     }
 </style>
 <template>

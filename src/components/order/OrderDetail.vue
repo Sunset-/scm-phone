@@ -3,7 +3,6 @@
         <sunset-table v-ref:table :options="tableOptions"></sunset-table>
     </div>
 </template>
-
 <script>
     import OrderStore from './OrderStore.js';
 
@@ -19,8 +18,9 @@
                     columns: [{
                         title: '名称',
                         name: 'GDNAME',
-                        format(v) {
-                            return v;
+                        format(v, record) {
+                            return record.SUNSET_APPEND_LABEL ? v :
+                                `[${record.GDNO}]${record.GDNAME}`;
                         }
                     }, {
                         title: '数量',
@@ -55,6 +55,7 @@
         methods: {
             loadDetail() {
                 if (this.order) {
+                    this.$refs.table.setData({});
                     this.$refs.table.search({
                         entno: this.order.ENTNO,
                         orderno: this.order.ORDERNO

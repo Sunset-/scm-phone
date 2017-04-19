@@ -10,7 +10,8 @@
 	<div :class="['sunset-field-wrap',invalid?'field-invalid':'']">
 		<label :class="['sunset-field-label',options.label?'':'sunset-field-label-empty']">{{options.label}}</label>
 		<div class="sunset-field">
-			<select class="filter-select" :model.sync="widgetValue">
+			<select class="filter-select" v-model="value">
+				<option value="">请选择</option>
 				<option v-for="item in items" :value="item.value">{{ item.text }}</option>
 			</select>
 		</div>

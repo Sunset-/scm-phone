@@ -16,14 +16,17 @@
             <mt-tab-item id="range">区段销售查询</mt-tab-item>
         </mt-navbar>
         <div class="content-container" style="top:70px">
+            <div>
+                <sunset-filter style="margin-top:10px;" v-ref:dayfilter :options="commonFilterOptions" @filter="setFilter"></sunset-filter>
+            </div>
             <div v-show="filterType=='day'">
-                <sunset-filter style="margin-bottom:10px;margin-top:10px;" v-ref:dayfilter :options="dayFilterOptions" @filter="loadSales"></sunset-filter>
+                <sunset-filter style="margin-bottom:10px;margin-top:5px;" v-ref:dayfilter :options="dayFilterOptions" @filter="loadSales"></sunset-filter>
             </div>
             <div v-show="filterType=='month'">
-                <sunset-filter style="margin-bottom:10px;margin-top:10px;" v-ref:monthfilter :options="monthFilterOptions" @filter="loadSales"></sunset-filter>
+                <sunset-filter style="margin-bottom:10px;margin-top:5px;" v-ref:monthfilter :options="monthFilterOptions" @filter="loadSales"></sunset-filter>
             </div>
             <div v-show="filterType=='range'">
-                <sunset-filter style="margin-bottom:10px;margin-top:10px;" v-ref:rangefilter :options="rangeFilterOptions" @filter="loadSales"></sunset-filter>
+                <sunset-filter style="margin-bottom:10px;margin-top:5px;" v-ref:rangefilter :options="rangeFilterOptions" @filter="loadSales"></sunset-filter>
             </div>
             <sunset-table v-ref:table :options="tableOptions"></sunset-table>
         </div>
@@ -42,13 +45,44 @@
         data() {
             return {
                 filterType: 'day',
-                filter: {
-                    pageno: 0,
-                    count: 10,
-                    oprtno: 1,
-                    entno: null,
-                    begdate: new Date(new Date().getTime() - 86400000 * 60),
-                    enddate: new Date()
+                filter: {},
+                commonFilterOptions: {
+                    align: 'left',
+                    fields: [{
+                        label: '分店',
+                        name: 'entno',
+                        widget: 'select',
+                        placeholder: '请选择分店',
+                        clearable: false,
+                        valuePlace: 'SHOPCODE',
+                        textPlace: 'SHOPNA',
+                        changeFilter: true,
+                        data() {
+                            return SignStore.getCurrentUserSync().shoplist || [];
+                        }
+                    }, (SignStore.getCurrentUserSync().isShopOperator ? {
+                        label: '供应商',
+                        name: 'vdno',
+                        widget: 'input',
+                        changeFilter: true,
+                        placeholder: '供应商编号'
+                    } : {
+                        label: '供应商',
+                        name: 'vdno',
+                        widget: 'select',
+                        changeFilter: true,
+                        placeholder: '供应商编号',
+                        watch: ['entno', (deps, options, filter) => {
+                            filter.vdno = null;
+                            options.data = SignStore.getCurrentUserSync().shopvdsMap[deps.entno] ||
+                                [];
+                        }]
+                    })],
+                    format: function (filter) {
+                        filter.type = 'day';
+                        filter.begdate = filter.enddate = Sunset.Dates.format(filter.date, 'yyyyMMdd');
+                        return filter;
+                    }
                 },
                 dayFilterOptions: {
                     align: 'left',
@@ -57,6 +91,7 @@
                         name: 'date',
                         widget: 'date',
                         type: 'daterange',
+                        newline: true,
                         placeholder: '时间范围',
                         default: (function () {
                             var now = new Date();
@@ -198,10 +233,14 @@
             };
         },
         methods: {
+            setFilter(filter) {
+                Object.assign(this.filter, filter);
+            },
             loadSales(filter) {
+                Object.assign(this.filter, filter);
                 if (filter.type == this.filterType) {
                     delete filter.type;
-                    this.$refs.table.search(filter);
+                    this.$refs.table.search(this.filter);
                 }
             },
             back() {
@@ -213,7 +252,7 @@
                 this.$refs[`${v}filter`].search();
             }
         },
-        ready(){
+        ready() {
             document.title = '销售查询';
         }
     }

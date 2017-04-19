@@ -25,7 +25,8 @@
         },
         computed: {
             isDetail() {
-                return this.$route.path == '/order/detail';
+                var path = this.$route.path;
+                return path.substring(0, path.indexOf('?') >= 0 ? path.indexOf('?') : path.length) == '/order/detail';
             }
         },
         data() {
@@ -54,16 +55,12 @@
                         name: 'vdno',
                         widget: 'select',
                         placeholder: '供应商编号',
-                        watch: ['entno', (deps, options) => {
+                        watch: ['entno', (deps, options, filter) => {
+                            filter.vdno = null;
                             options.data = SignStore.getCurrentUserSync().shopvdsMap[deps.entno] ||
                                 [];
                         }]
                     }), {
-                        label: '部门',
-                        name: 'deptno',
-                        widget: 'input',
-                        placeholder: '部门编号'
-                    }, {
                         label: '开始时间',
                         name: 'begdate',
                         widget: 'date',
@@ -114,18 +111,18 @@
                         },
                         align: 'center'
                     }, {
-                        title: '状态',
-                        name: 'STAT'
+                        title: '总成本',
+                        name: 'TLCOST',
+                        format: 'MONEY',
+                        align: 'center'
                     }, {
                         title: '送货日期',
                         name: 'DELIVEDATE',
                         format: 'DATE',
                         align: 'center'
                     }, {
-                        title: '总成本',
-                        name: 'TLCOST',
-                        format: 'MONEY',
-                        align: 'center'
+                        title: '状态',
+                        name: 'STAT'
                     }],
                     showIndex: false,
                     pageSize: 10,

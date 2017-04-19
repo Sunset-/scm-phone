@@ -9,7 +9,7 @@
                 <sunset-table v-ref:table :options="tableOptions"></sunset-table>
             </div>
             <div v-show="isDetail">
-                <statement-detail :statement="currentStatement"></statement-detail>
+                <statement-detail :statement="currentStatement" @refresh="refresh"></statement-detail>
             </div>
         </div>
     </div>
@@ -25,7 +25,8 @@
         },
         computed: {
             isDetail() {
-                return this.$route.path == '/statement/detail';
+                var path = this.$route.path;
+                return path.substring(0, path.indexOf('?') >= 0 ? path.indexOf('?') : path.length) == '/statement/detail';
             }
         },
         data() {
@@ -54,16 +55,12 @@
                         name: 'vdno',
                         widget: 'select',
                         placeholder: '供应商编号',
-                        watch: ['entno', (deps, options) => {
+                        watch: ['entno', (deps, options, filter) => {
+                            filter.vdno = null;
                             options.data = SignStore.getCurrentUserSync().shopvdsMap[deps.entno] ||
                                 [];
                         }]
                     }), {
-                        label: '部门',
-                        name: 'deptno',
-                        widget: 'input',
-                        placeholder: '部门编号'
-                    }, {
                         label: '开始时间',
                         name: 'begdate',
                         widget: 'date',
@@ -115,17 +112,28 @@
                         align: 'center'
                     }, {
                         title: '类型',
-                        name: 'WLTYPE'
+                        name: 'WLTYPE',
+                        format(v) {
+                            return {
+                                'BY': '收货',
+                                'RT': '退货',
+                                'SL': '销售',
+                                'AJ': '销售调整',
+                                'FE': '供应商费用'
+                            }[v];
+                        }
                     }, {
                         title: '金额',
                         name: 'PAYAMT',
-                        format: 'MONEY',
-                        align: 'center'
+                        format: 'MONEY'
                     }, {
                         title: '账期',
-                        name: 'TLCOST',
-                        format: 'MONEY',
-                        align: 'center'
+                        name: 'JSDATENO',
+                        align: 'center',
+                        link: (item) => {
+                            Router.go('/statement/detail');
+                            this.currentStatement = item;
+                        }
                     }, {
                         title: '是否确认',
                         name: 'CHKTAG',
@@ -166,6 +174,9 @@
             },
             back() {
                 Router.go('/statement');
+            },
+            refresh() {
+                this.$refs.table.refresh();
             }
         },
         ready() {

@@ -1,7 +1,8 @@
 const URLS = {
     LIST: '/service/scm/select/getVdacctsumList',
-    DETAIL: '/service/scm/select/getOrderDetailList',
-    CONFIRM: '/service/scm/select/confirmOrders'
+    DETAIL_RECEIVE: '/service/scm/select/getReceiveDetailList',
+    DETAIL_RETURN: '/service/scm/select/getReturnDetailList',
+    CONFIRM: '/service/scm/select/confirmAcc'
 };
 
 module.exports = {
@@ -13,26 +14,43 @@ module.exports = {
         });
     },
     loadDetail(filter) {
+        var type = filter.type,
+            desc = filter.desc;
+        delete filter.type;
+        delete filter.desc;
+        var urlType = {
+            BY: 'DETAIL_RECEIVE',
+            RT: 'DETAIL_RETURN'
+        };
         return $http({
-            url: URLS.DETAIL,
+            url: URLS[urlType[type]],
             type: 'POST',
             data: filter
         }).then(res => {
             if (res) {
-                var totalCount = 0,
-                    totalPrice = 0;
+                var totalPrc = 0,
+                    totalCost = 0;
                 res.list = res.list || [];
                 res.list.forEach(item => {
-                    totalCount += item.ORDERQTY;
-                    totalPrice += item.TLCOST;
+                    item.desc = desc;
+                    totalPrc += item.TLPRC;
+                    totalCost += item.TLCOST;
                 });
                 res.list.push({
-                    GDNAME: '<span style="float:right;">总计：</span>',
-                    ORDERQTY: totalCount,
-                    TLCOST: totalPrice
+                    SUNSET_APPEND_LABEL: true,
+                    desc: '<span style="float:right;">总计：</span>',
+                    TLPRC: totalPrc,
+                    TLCOST: totalCost
                 })
             }
             return res;
+        });
+    },
+    confirm(model) {
+        return $http({
+            url: URLS.CONFIRM,
+            type: 'POST',
+            data: model
         });
     }
 }

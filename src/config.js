@@ -1,5 +1,4 @@
 //DEPENDENTS
-import FontAwesome from 'font-awesome';
 import $ from 'jquery';
 
 window.$http = function (...args) {
@@ -16,7 +15,7 @@ window.$http = function (...args) {
                 } catch (e) {}
                 Sunset.goLogin && Sunset.goLogin();
             } else {
-                Base.Toast && Base.Toast(res.message || '服务异常')
+                Sunset.tip(res.message || '服务异常')
             }
         }
         promise.reject(res);

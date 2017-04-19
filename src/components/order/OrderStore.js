@@ -27,6 +27,7 @@ module.exports = {
                     totalPrice += item.TLCOST;
                 });
                 res.list.push({
+                    SUNSET_APPEND_LABEL: true,
                     GDNAME: '<span style="float:right;">总计：</span>',
                     ORDERQTY: totalCount,
                     TLCOST: totalPrice

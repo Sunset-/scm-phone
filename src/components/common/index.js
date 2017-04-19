@@ -7,14 +7,11 @@ import {
 import DataTable from './DataTable.vue';
 import Pagination from './Pagination.vue';
 import Filter from './filter/Filter.vue';
-import picker from 'vue-3d-picker';
 
 exports.install = function (Vue) {
     Vue.component(`SunsetTable`, DataTable);
     Vue.component(`SunsetPage`, Pagination);
     Vue.component(`SunsetFilter`, Filter);
-    // Vue.component(`SunsetPicker`, picker);
-    Vue.component(picker.name, picker);
 
     /**
      * 取值
@@ -55,11 +52,7 @@ exports.install = function (Vue) {
         });
     };
     Sunset.confirm = function (option) {
-        return MessageBox({
-            title: option.title,
-            message: option.message,
-            showCancelButton: true
-        });
+        return MessageBox.confirm(option.message);
     };
     Sunset.loading = function (flag) {
         Indicator[flag ? 'open' : 'close']();
