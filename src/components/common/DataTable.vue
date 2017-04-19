@@ -1,5 +1,6 @@
 <style lang="sass">
     .sunset-crud-table-container {
+        font-size: 14px;
         .sunset-crud-table-wrap {
             overflow-y: auto;
             border-top: 1px solid #eeeeee;
@@ -337,10 +338,14 @@
                 })()).then(res => {
                     this.refreshLoader(false);
                     this.setData(res);
+                }).catch(e => {
+                    e && (e.message || e.statusText) && Sunset.tip(e.message || e.statusText);
+                    this.refreshLoader(false);
                 });
             },
             refreshLoader(flag) {
                 if (!this.slientLoading) {
+                    Sunset.loading(flag);
                     this.loading = flag;
                 }
             },

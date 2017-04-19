@@ -1,36 +1,36 @@
 <template>
     <div>
-        <mt-header :title="isDetail?'订单明细':'订单查询'">
+        <mt-header :title="isDetail?'对账单明细':'对账单'">
             <mt-button v-if="isDetail" icon="back" slot="left" @click="back">返回</mt-button>
         </mt-header>
         <div class="content-container">
             <div v-show="!isDetail">
-                <sunset-filter style="margin-bottom:10px;" v-ref:filter :options="filterOptions" @filter="loadOrders"></sunset-filter>
+                <sunset-filter style="margin-bottom:10px;" v-ref:filter :options="filterOptions" @filter="loadStatements"></sunset-filter>
                 <sunset-table v-ref:table :options="tableOptions"></sunset-table>
             </div>
             <div v-show="isDetail">
-                <order-detail :order="currentOrder"></order-detail>
+                <statement-detail :statement="currentStatement"></statement-detail>
             </div>
         </div>
     </div>
 </template>
 <script>
     import SignStore from '../SignStore.js';
-    import OrderStore from './OrderStore';
-    import OrderDetail from './OrderDetail.vue';
+    import StatementStore from './StatementStore';
+    import StatementDetail from './StatementDetail.vue';
 
     export default {
         components: {
-            OrderDetail
+            StatementDetail
         },
         computed: {
             isDetail() {
-                return this.$route.path == '/order/detail';
+                return this.$route.path == '/statement/detail';
             }
         },
         data() {
             return {
-                currentOrder: null,
+                currentStatement: null,
                 filterOptions: {
                     align: 'left',
                     fields: [{
@@ -106,26 +106,36 @@
                 },
                 tableOptions: {
                     columns: [{
-                        title: '单号',
-                        name: 'ORDERNO',
+                        title: '日期',
+                        name: 'WORKDATE',
                         link: (item) => {
-                            Router.go('/order/detail');
-                            this.currentOrder = item;
+                            Router.go('/statement/detail');
+                            this.currentStatement = item;
                         },
                         align: 'center'
                     }, {
-                        title: '状态',
-                        name: 'STAT'
+                        title: '类型',
+                        name: 'WLTYPE'
                     }, {
-                        title: '送货日期',
-                        name: 'DELIVEDATE',
-                        format: 'DATE',
+                        title: '金额',
+                        name: 'PAYAMT',
+                        format: 'MONEY',
                         align: 'center'
                     }, {
-                        title: '总成本',
+                        title: '账期',
                         name: 'TLCOST',
                         format: 'MONEY',
                         align: 'center'
+                    }, {
+                        title: '是否确认',
+                        name: 'CHKTAG',
+                        align: 'center',
+                        format(v) {
+                            return {
+                                '0': '<span style="color:red;">未确认</span>',
+                                '1': '<span>已确认</span>'
+                            }[v];
+                        }
                     }],
                     showIndex: false,
                     pageSize: 10,
@@ -141,23 +151,25 @@
                         currentPage: 'pageno'
                     },
                     formatFilter: (filter) => {
+                        filter.begdate = Sunset.Dates.format(filter.begdate, 'yyyyMMdd');
+                        filter.enddate = Sunset.Dates.format(filter.enddate, 'yyyyMMdd');
                         return filter;
                     },
-                    method: 'loadOrders',
-                    store: OrderStore
+                    method: 'loadStatements',
+                    store: StatementStore
                 }
             };
         },
         methods: {
-            loadOrders(filter) {
+            loadStatements(filter) {
                 this.$refs.table.search(filter);
             },
             back() {
-                Router.go('/order');
+                Router.go('/statement');
             }
         },
         ready() {
-            document.title = '订单查询';
+            document.title = '对账单';
         }
     }
 </script>

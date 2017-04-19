@@ -1,11 +1,11 @@
 const URLS = {
-    LIST: '/service/scm/select/getOrderList',
+    LIST: '/service/scm/select/getVdacctsumList',
     DETAIL: '/service/scm/select/getOrderDetailList',
     CONFIRM: '/service/scm/select/confirmOrders'
 };
 
 module.exports = {
-    loadOrders(filter) {
+    loadStatements(filter) {
         return $http({
             url: URLS.LIST,
             type: 'POST',

@@ -4,6 +4,7 @@
 		vertical-align: top;
 		.sunset-search-form {
 			display: inline-block;
+			font-size: 0px;
 			.search-form-button {
 				margin-bottom: 0px;
 			}
@@ -30,8 +31,10 @@
 <template>
 	<div :class="['sunset-search-form-container',right?'pull-right':'']">
 		<form :class="['sunset-search-form form-inline form-horizontal',right?'pull-right':'']" onsubmit="return false">
-			<filter-field v-for="field in fields" :options="field" :filter="filter" :value.sync="filter[field.name]" @search="fieldTriggerSearch"
-							@ready="fieldReady"></filter-field>
+			<template v-for="field in fields">
+				<div v-if="field.newline"></div>
+				<filter-field :options="field" :filter="filter" :value.sync="filter[field.name]" @search="fieldTriggerSearch" @ready="fieldReady"></filter-field>
+			</template>
 			<mt-button v-if="searchButton" :type="searchButton.color||'primary'" size="small" :icon="searchButton.icon" @click="search">{{searchButton.label}}</mt-button>
 		</form>
 	</div>

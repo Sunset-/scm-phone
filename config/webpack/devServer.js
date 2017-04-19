@@ -6,7 +6,7 @@ module.exports = {
     hot: true,
     inline: true,
     host: '0.0.0.0',
-    port: 3002,
+    port: 3003,
     proxy: {
         '/service/*': {
             target: 'http://120.24.176.56:9010/',
