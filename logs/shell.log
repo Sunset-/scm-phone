@@ -1,4 +1,4 @@
-Last login: Wed Apr 19 23:07:22 2017 from 123.139.22.152
+Last login: Thu Apr 20 22:18:47 2017 from 123.139.21.19
 
 Welcome to aliyun Elastic Compute Service!
 
@@ -7,13 +7,16 @@ Hi, please view: http://pastie.org/private/3hymqya3krcfn2xic3qikg for further in
 Hi, please view: http://pastie.org/private/3hymqya3krcfn2xic3qikg for further information in regards to your files!
 Hi, please view: http://pastie.org/private/3hymqya3krcfn2xic3qikg for further information in regards to your files!
 [root@iZ94yxnvvbwZ ~]# cd /home/scm/phone
-[root@iZ94yxnvvbwZ phone]# unzip -o build-20170419-2308.zip
-Archive:  build-20170419-2308.zip
+[root@iZ94yxnvvbwZ phone]# unzip -o build-20170420-2245.zip
+Archive:  build-20170420-2245.zip
   inflating: build.js                
   inflating: build.js.map            
   inflating: index.html              
+  inflating: style.48fa46f1507cdca77ceb.css  
   inflating: style.8cd184b53870163c8549.css  
   inflating: verification.html       
+  inflating: dll/dll.23ac2e23fef7aea345b6.css  
+  inflating: dll/dll.23ac2e23fef7aea345b6.js  
   inflating: images/fontawesome-webfont.eot  
   inflating: images/fontawesome-webfont.svg  
   inflating: images/fontawesome-webfont.ttf  
@@ -23,9 +26,7 @@ Archive:  build-20170419-2308.zip
   inflating: images/person_card.png  
   inflating: images/person_mark.png  
   inflating: images/person_oem.png   
-  inflating: dll/dll.23ac2e23fef7aea345b6.css  
-  inflating: dll/dll.23ac2e23fef7aea345b6.js  
-  inflating: scripts/index.8cd184b53870163c8549.js  
+  inflating: scripts/index.48fa46f1507cdca77ceb.js  
   inflating: js/jquery.min.js        
   inflating: js/sunset-wechat.js     
   inflating: js/wx.js                
@@ -34,6 +35,6 @@ Archive:  build-20170419-2308.zip
   inflating: dll/images/fontawesome-webfont.ttf  
   inflating: dll/images/fontawesome-webfont.woff  
   inflating: dll/images/fontawesome-webfont.woff2  
-[root@iZ94yxnvvbwZ phone]# rm -rf build-20170419-2308.zip
+[root@iZ94yxnvvbwZ phone]# rm -rf build-20170420-2245.zip
 [root@iZ94yxnvvbwZ phone]# exit
 logout

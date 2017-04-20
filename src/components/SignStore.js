@@ -23,16 +23,21 @@ module.exports = {
             //缓存用户数据权限
             data.shopvdsMap = {};
             if (data.isProviderGroupOperator || data.isProviderBranchOperator) {
-                data.shoplist = data.shopvdlist.map(item => {
+                data.shoplist = [];
+                var shopListUniq = {};
+                data.shopvdlist.forEach(item => {
                     data.shopvdsMap[item.ENTNO] = data.shopvdsMap[item.ENTNO] || [];
                     data.shopvdsMap[item.ENTNO].push({
                         text: item.VDNAME,
                         value: item.VDNO
                     });
-                    return {
-                        SHOPCODE: item.ENTNO,
-                        SHOPNA: item.SHOPNA
-                    };
+                    if (!shopListUniq[item.ENTNO]) {
+                        shopListUniq[item.ENTNO] = true;
+                        data.shoplist.push({
+                            SHOPCODE: item.ENTNO,
+                            SHOPNA: item.SHOPNA
+                        });
+                    }
                 });
             }
             //分店供应商对照

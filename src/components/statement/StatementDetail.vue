@@ -21,11 +21,11 @@
                         name: 'desc'
                     }, {
                         title: '销售',
-                        name: 'TLPRC',
+                        name: 'prc',
                         format: 'MONEY'
                     }, {
                         title: '成本',
-                        name: 'TLCOST',
+                        name: 'cost',
                         format: 'MONEY'
                     }],
                     showIndex: false,

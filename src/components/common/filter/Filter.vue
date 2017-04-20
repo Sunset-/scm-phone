@@ -26,6 +26,14 @@
 		.mint-button--small {
 			width: 100%;
 		}
+		.sunset-search-button {
+			background-image: -moz-linear-gradient(top, #08c, #04c);
+			background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08c), to(#04c));
+			background-image: -webkit-linear-gradient(top, #08c, #04c);
+			background-image: -o-linear-gradient(top, #08c, #04c);
+			background-image: linear-gradient(to bottom, #08c, #04c);
+			background-repeat: repeat-x;
+		}
 	}
 </style>
 <template>
@@ -35,7 +43,7 @@
 				<div v-if="field.newline"></div>
 				<filter-field :options="field" :filter="filter" :value.sync="filter[field.name]" @search="fieldTriggerSearch" @ready="fieldReady"></filter-field>
 			</template>
-			<mt-button v-if="searchButton" :type="searchButton.color||'primary'" size="small" :icon="searchButton.icon" @click="search">{{searchButton.label}}</mt-button>
+			<mt-button class="sunset-search-button" v-if="searchButton" :type="searchButton.color||'primary'" size="small" :icon="searchButton.icon" @click="search">{{searchButton.label}}</mt-button>
 		</form>
 	</div>
 </template>

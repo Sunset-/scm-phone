@@ -49,7 +49,8 @@ router.map({
   }
 });
 
-
 SignStore.currentUser().then(res => {
   router.start(App, 'app');
 });
+
+window.Router.go(`/${Sunset.getQueryString('page')}`);
